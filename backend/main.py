@@ -3,7 +3,9 @@ from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from llm import ask_llm
+
 print("THIS IS THE MAIN FILE BEING LOADED")
+
 from tools.file_reader import read_file
 from tools.code_analyzer import analyze_code
 from tools.language_detector import detect_language
@@ -12,6 +14,7 @@ from storage.session import CURRENT_FILE, CHAT_HISTORY
 
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -23,12 +26,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class ChatRequest(BaseModel):
     prompt: str
 
-class CodeChatRequest(BaseModel):
-    question: str    
 
+class CodeChatRequest(BaseModel):
+    question: str
 
 
 @app.get("/")
