@@ -630,173 +630,140 @@ ${response.data.ai_report}`
           </div>
 
 
-        </aside>
-       {analysisResult?.analysis && (
-  <div className="analysis-dashboard">
+        
 
-    {/* HEADER */}
-    <div className="analysis-header">
+        {/* =================================
+            CONTENT AREA
+        ================================= */}
 
-      <div>
-        <span className="analysis-label">
-          AI CODE REVIEW
-        </span>
+        
+       <main className="workspace workspace-animate">
 
-        <h2>
-          Code Analysis
-        </h2>
+  {analysisResult?.analysis && (
+    <div className="analysis-dashboard">
+      
+      <div className="analysis-header">
 
-        <p>
-          AI-powered insights for your uploaded code
+        <div>
+          <span className="analysis-label">
+            AI CODE REVIEW
+          </span>
+
+          <h2>
+            Code Analysis
+          </h2>
+
+          <p>
+            AI-powered insights for your uploaded code
+          </p>
+        </div>
+
+        <div className="analysis-file">
+          <span className="file-dot"></span>
+          {analysisResult.filename}
+        </div>
+
+      </div>
+
+
+      <div className="analysis-overview">
+
+        <div className="quality-score-card">
+
+          <span className="score-label">
+            CODE QUALITY
+          </span>
+
+          <div className="score-circle">
+
+            <strong>
+              {analysisResult.analysis.quality_score}
+            </strong>
+
+            <span>/100</span>
+
+          </div>
+
+          <p>
+            Overall code quality
+          </p>
+
+        </div>
+
+
+        <div className="analysis-stats">
+
+          <div className="analysis-card">
+            <div className="analysis-icon">🐛</div>
+
+            <div>
+              <span>Bugs</span>
+
+              <strong>
+                {analysisResult.analysis.bugs?.length ?? 0}
+              </strong>
+            </div>
+          </div>
+
+
+          <div className="analysis-card">
+            <div className="analysis-icon">⚠️</div>
+
+            <div>
+              <span>Warnings</span>
+
+              <strong>
+                {analysisResult.analysis.warnings?.length ?? 0}
+              </strong>
+            </div>
+          </div>
+
+
+          <div className="analysis-card">
+            <div className="analysis-icon">⚡</div>
+
+            <div>
+              <span>Complexity</span>
+
+              <strong>
+                {analysisResult.analysis.complexity}
+              </strong>
+            </div>
+          </div>
+
+
+          <div className="analysis-card">
+            <div className="analysis-icon">🔒</div>
+
+            <div>
+              <span>Security</span>
+
+              <strong>
+                {analysisResult.analysis.security}
+              </strong>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div className="analysis-section">
+
+        <div className="section-title">
+          <span>✦</span>
+          Code Summary
+        </div>
+
+        <p className="analysis-summary">
+          {analysisResult.analysis.summary}
         </p>
-      </div>
-
-      <div className="analysis-file">
-        <span className="file-dot"></span>
-        {analysisResult.filename}
-      </div>
-
-    </div>
-
-
-    {/* SCORE + STATS */}
-    <div className="analysis-overview">
-
-      {/* QUALITY SCORE */}
-      <div className="quality-score-card">
-
-        <span className="score-label">
-          CODE QUALITY
-        </span>
-
-        <div className="score-circle">
-
-          <strong>
-            {analysisResult.analysis.quality_score}
-          </strong>
-
-          <span>/100</span>
-
-        </div>
-
-        <p>
-          Overall code quality
-        </p>
 
       </div>
 
 
-      {/* STATS */}
-      <div className="analysis-stats">
-
-        <div className="analysis-card bug-card">
-
-          <div className="analysis-icon">
-            🐛
-          </div>
-
-          <div>
-            <span>
-              Bugs
-            </span>
-
-            <strong>
-              {
-                analysisResult.analysis.bugs?.length ?? 0
-              }
-            </strong>
-          </div>
-
-        </div>
-
-
-        <div className="analysis-card warning-card">
-
-          <div className="analysis-icon">
-            ⚠️
-          </div>
-
-          <div>
-            <span>
-              Warnings
-            </span>
-
-            <strong>
-              {
-                analysisResult.analysis.warnings?.length ?? 0
-              }
-            </strong>
-          </div>
-
-        </div>
-
-
-        <div className="analysis-card">
-
-          <div className="analysis-icon">
-            ⚡
-          </div>
-
-          <div>
-            <span>
-              Complexity
-            </span>
-
-            <strong>
-              {
-                analysisResult.analysis.complexity
-              }
-            </strong>
-          </div>
-
-        </div>
-
-
-        <div className="analysis-card">
-
-          <div className="analysis-icon">
-            🔒
-          </div>
-
-          <div>
-            <span>
-              Security
-            </span>
-
-            <strong>
-              {
-                analysisResult.analysis.security
-              }
-            </strong>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* SUMMARY */}
-    <div className="analysis-section">
-
-      <div className="section-title">
-        <span>✦</span>
-        Code Summary
-      </div>
-
-      <p className="analysis-summary">
-        {
-          analysisResult.analysis.summary
-        }
-      </p>
-
-    </div>
-
-
-    {/* BUGS */}
-    {
-      analysisResult.analysis.bugs?.length > 0 && (
+      {analysisResult.analysis.bugs?.length > 0 && (
 
         <div className="analysis-section">
 
@@ -807,48 +774,43 @@ ${response.data.ai_report}`
 
           <div className="issue-list">
 
-            {
-              analysisResult.analysis.bugs.map(
-                (bug, index) => (
+            {analysisResult.analysis.bugs.map(
+              (bug, index) => (
 
-                  <div
-                    className="issue-item bug-item"
-                    key={index}
-                  >
+                <div
+                  className="issue-item bug-item"
+                  key={index}
+                >
 
-                    <div className="issue-header">
+                  <div className="issue-header">
 
-                      <strong>
-                        {bug.title}
-                      </strong>
+                    <strong>
+                      {bug.title}
+                    </strong>
 
-                      <span className="severity-badge">
-                        {bug.severity}
-                      </span>
-
-                    </div>
-
-                    <p>
-                      {bug.description}
-                    </p>
+                    <span className="severity-badge">
+                      {bug.severity}
+                    </span>
 
                   </div>
 
-                )
+                  <p>
+                    {bug.description}
+                  </p>
+
+                </div>
+
               )
-            }
+            )}
 
           </div>
 
         </div>
 
-      )
-    }
+      )}
 
 
-    {/* WARNINGS */}
-    {
-      analysisResult.analysis.warnings?.length > 0 && (
+      {analysisResult.analysis.warnings?.length > 0 && (
 
         <div className="analysis-section">
 
@@ -859,40 +821,35 @@ ${response.data.ai_report}`
 
           <div className="issue-list">
 
-            {
-              analysisResult.analysis.warnings.map(
-                (warning, index) => (
+            {analysisResult.analysis.warnings.map(
+              (warning, index) => (
 
-                  <div
-                    className="issue-item warning-item"
-                    key={index}
-                  >
+                <div
+                  className="issue-item warning-item"
+                  key={index}
+                >
 
-                    <strong>
-                      {warning.title}
-                    </strong>
+                  <strong>
+                    {warning.title}
+                  </strong>
 
-                    <p>
-                      {warning.description}
-                    </p>
+                  <p>
+                    {warning.description}
+                  </p>
 
-                  </div>
+                </div>
 
-                )
               )
-            }
+            )}
 
           </div>
 
         </div>
 
-      )
-    }
+      )}
 
 
-    {/* SUGGESTIONS */}
-    {
-      analysisResult.analysis.suggestions?.length > 0 && (
+      {analysisResult.analysis.suggestions?.length > 0 && (
 
         <div className="analysis-section">
 
@@ -903,46 +860,37 @@ ${response.data.ai_report}`
 
           <div className="suggestion-list">
 
-            {
-              analysisResult.analysis.suggestions.map(
-                (suggestion, index) => (
+            {analysisResult.analysis.suggestions.map(
+              (suggestion, index) => (
 
-                  <div
-                    className="suggestion-item"
-                    key={index}
-                  >
+                <div
+                  className="suggestion-item"
+                  key={index}
+                >
 
-                    <span>
-                      {index + 1}
-                    </span>
+                  <span>
+                    {index + 1}
+                  </span>
 
-                    <p>
-                      {suggestion}
-                    </p>
+                  <p>
+                    {suggestion}
+                  </p>
 
-                  </div>
+                </div>
 
-                )
               )
-            }
+            )}
 
           </div>
 
         </div>
 
-      )
-    }
+      )}
 
-  </div>
-)}
+    </div>
+  )}
 
-        {/* =================================
-            CONTENT AREA
-        ================================= */}
-
-        
-        <main className="workspace workspace-animate">
-
+  
   {activePage === "dashboard" && (
     <>
            {/* =================================
