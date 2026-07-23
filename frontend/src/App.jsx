@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import SplashScreen from "./components/SplashScreen";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import "./App.css";
@@ -27,12 +29,38 @@ function App() {
 
   const [mode, setMode] = useState("chat");
   const [copied, setCopied] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+const [exitingSplash, setExitingSplash] = useState(false);
+
+useEffect(() => {
+  const exitTimer = setTimeout(() => {
+    setExitingSplash(true);
+  }, 2700);
+
+  const removeTimer = setTimeout(() => {
+    setShowSplash(false);
+  }, 3500);
+
+  return () => {
+    clearTimeout(exitTimer);
+    clearTimeout(removeTimer);
+  };
+}, []);
 
 
   /* ================================
      UPLOAD CODE
   ================================= */
 
+
+  
+if (showSplash) {
+  return (
+    <SplashScreen
+      exiting={exitingSplash}
+    />
+  );
+}
   const handleUpload = async () => {
 
     if (!file) {
@@ -313,6 +341,7 @@ ${response.data.ai_report}`
     }
 
   };
+  
 
 
   return (
@@ -562,7 +591,11 @@ ${response.data.ai_report}`
 
   {activePage === "dashboard" && (
     <>
-           
+           {/* =================================
+    DASHBOARD OVERVIEW
+================================= */}
+
+
 
           {/* =================================
               UPLOAD SECTION
