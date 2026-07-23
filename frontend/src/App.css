@@ -6030,3 +6030,56 @@ button {
   margin-top: 10px !important;
   padding: 12px !important;
 }
+/* ========================================
+   FINAL FIX - SIDEBAR + WORKSPACE
+======================================== */
+
+.dashboard-layout {
+  display: flex !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+.sidebar {
+  flex: 0 0 250px !important;
+  width: 250px !important;
+}
+
+.workspace {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/* Analysis full workspace width */
+.workspace > .analysis-dashboard {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 20px 0 !important;
+}
+
+/* Code + Assistant equal width */
+.workspace .main-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  gap: 20px !important;
+}
+
+.workspace .code-panel,
+.workspace .chat-panel {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .workspace .main-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
