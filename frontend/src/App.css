@@ -5151,3 +5151,144 @@ body {
   }
 
 }
+/* ========================================
+   MODERN AI ASSISTANT HEADER
+======================================== */
+
+.ai-assistant-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 24, 35, 0.98),
+    rgba(15, 18, 28, 0.98)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ai-assistant-header h2 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.3px;
+}
+
+.ai-assistant-header span {
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   MODERN CODE EDITOR FILE TAB
+======================================== */
+
+.editor-file-tab {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 42px;
+  padding: 0 16px;
+  background: #151922;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  font-size: 13px;
+  font-weight: 500;
+  position: relative;
+}
+
+
+/* Active tab indicator */
+
+.editor-file-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #6366f1;
+}
+
+
+/* File dot */
+
+.file-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+
+/* File name */
+
+.editor-file-name {
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* Uploaded file check */
+
+.file-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ========================================
+   AI ASSISTANT - FULL PANEL
+======================================== */
+
+.ai-assistant-panel {
+  background: #0f1117;
+  color: #e5e7eb;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ai-assistant-panel > * {
+  background: transparent;
+}
+
+/* ========================================
+   CODE EDITOR - FULL PANEL
+======================================== */
+
+.code-editor-panel {
+  background: #0b0e13;
+  color: #d1d5db;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.code-editor-panel .editor-file-tab {
+  flex-shrink: 0;
+}
+
+.code-editor-panel .editor-content {
+  flex: 1;
+  background: #0b0e13;
+  color: #d1d5db;
+}
