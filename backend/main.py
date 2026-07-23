@@ -123,9 +123,14 @@ def test_planner():
     return {
         "selected_tools": tools
     }
-
 @app.post("/chat-code")
 def chat_with_code(request: CodeChatRequest):
+
+    if not request.question.strip():
+        return {
+            "success": False,
+            "message": "Please enter a question."
+        }
 
     if CURRENT_FILE["content"] is None:
         return {
@@ -166,19 +171,40 @@ Previous Conversation:
 Answer the user's latest question based on the uploaded code
 and previous conversation.
 
+Rules:
+- Give accurate answers based on the uploaded code.
+- Explain bugs clearly.
+- Suggest improvements when useful.
+- If code needs correction, provide corrected code.
+- Keep the answer easy to understand.
+- Do not invent code that is unrelated to the uploaded file.
+
 Answer in simple English.
-If needed, include corrected code.
 """
 
-    response = ask_llm(prompt)
+    try:
 
-    # Save AI response
-    CHAT_HISTORY.append({
-        "role": "assistant",
-        "content": response
-    })
+        response = ask_llm(prompt)
 
-    return {
-        "success": True,
-        "answer": response
-    }
+        # Save AI response
+        CHAT_HISTORY.append({
+            "role": "assistant",
+            "content": response
+        })
+
+        return {
+            "success": True,
+            "answer": response
+        }
+
+    except Exception as e:
+
+        # Remove last user message if AI request fails
+        if CHAT_HISTORY and CHAT_HISTORY[-1]["role"] == "user":
+            CHAT_HISTORY.pop()
+
+        return {
+            "success": False,
+            "message": "AI service is temporarily unavailable.",
+            "error": str(e)
+        }
