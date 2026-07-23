@@ -1192,7 +1192,6 @@ Upload Code
     Analyze, debug and improve your code
   </span>
 </div>
-className="ai-assistant-panel"
 
 
                 </div>
@@ -1980,7 +1979,7 @@ className="ai-assistant-panel"
       
 
 
-      </div>
+     </aside> </div>
 
 
     </div>
