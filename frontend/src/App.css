@@ -4201,3 +4201,953 @@ body {
 
 }
 
+/* =========================================
+   DASHBOARD ENTRANCE ANIMATION
+========================================= */
+
+.dashboard-enter {
+  animation: dashboardFadeIn 0.8s ease-out;
+}
+
+
+@keyframes dashboardFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   SIDEBAR SLIDE IN
+========================================= */
+
+.sidebar-animate {
+  animation: sidebarSlideIn 0.7s ease-out;
+}
+
+
+@keyframes sidebarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================
+   MAIN WORKSPACE
+========================================= */
+
+.workspace-animate {
+  animation: workspaceSlideIn 0.8s ease-out;
+}
+
+
+@keyframes workspaceSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   UPLOAD CARD ANIMATION
+========================================= */
+
+.upload-card {
+  animation: uploadCardEnter 0.8s ease-out 0.15s both;
+}
+
+
+@keyframes uploadCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   MAIN PANELS ANIMATION
+========================================= */
+
+.main-grid {
+  animation: panelsEnter 0.8s ease-out 0.3s both;
+}
+
+
+@keyframes panelsEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   AI AVATAR
+========================================= */
+
+.ai-avatar {
+  animation: aiPulse 2.5s ease-in-out infinite;
+}
+
+
+@keyframes aiPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px rgba(56, 189, 248, 0.12);
+  }
+}
+
+/* =========================================
+   SIDEBAR HOVER
+========================================= */
+
+.sidebar-item {
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.sidebar-item:hover {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   UPLOAD BUTTON
+========================================= */
+
+.upload-button {
+  position: relative;
+  overflow: hidden;
+}
+
+
+.upload-button::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+
+  transition: left 0.5s ease;
+}
+
+
+.upload-button:hover::after {
+  left: 100%;
+}
+
+/* =========================================
+   DASHBOARD WELCOME HEADER
+========================================= */
+
+.dashboard-welcome {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 34px;
+
+  padding: 4px 4px;
+
+  animation:
+    welcomeEnter
+    0.7s
+    ease-out
+    both;
+}
+
+
+.welcome-content {
+  min-width: 0;
+}
+
+
+.welcome-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  color: #38bdf8;
+}
+
+
+.welcome-content h1 {
+  margin: 0;
+
+  font-size: 27px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -0.7px;
+
+  color: #f8fafc;
+}
+
+
+.welcome-content h1 span {
+  display: inline-block;
+
+  animation:
+    waveHand
+    2s
+    ease-in-out
+    infinite;
+}
+
+
+.welcome-content p {
+  margin-top: 7px;
+
+  font-size: 12px;
+
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   SYSTEM STATUS
+========================================= */
+
+.system-status-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  padding:
+    11px 15px;
+
+  border:
+    1px solid
+    rgba(148, 163, 184, 0.15);
+
+  border-radius: 12px;
+
+  background:
+    rgba(15, 23, 42, 0.65);
+
+  box-shadow:
+    0 8px 25px
+    rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.system-status-card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(56, 189, 248, 0.3);
+}
+
+
+.system-status-dot {
+  width: 8px;
+
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    #22c55e;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 197, 94, 0.12);
+
+  animation:
+    statusPulse
+    2s
+    ease-in-out
+    infinite;
+}
+
+
+.system-status-card strong {
+  display: block;
+
+  font-size: 11px;
+
+  color:
+    #e2e8f0;
+}
+
+
+.system-status-card div span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  color:
+    #64748b;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes welcomeEnter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+@keyframes waveHand {
+
+  0%,
+  100% {
+    transform:
+      rotate(0deg);
+  }
+
+  10% {
+    transform:
+      rotate(14deg);
+  }
+
+  20% {
+    transform:
+      rotate(-8deg);
+  }
+
+  30% {
+    transform:
+      rotate(14deg);
+  }
+
+  40% {
+    transform:
+      rotate(-4deg);
+  }
+
+  50% {
+    transform:
+      rotate(0deg);
+  }
+
+}
+
+
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    opacity:
+      1;
+
+    box-shadow:
+      0 0 0 4px
+      rgba(34, 197, 94, 0.12);
+  }
+
+  50% {
+    opacity:
+      0.65;
+
+    box-shadow:
+      0 0 0 7px
+      rgba(34, 197, 94, 0.03);
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .dashboard-welcome {
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
+  }
+
+
+  .system-status-card {
+    width:
+      100%;
+  }
+
+
+  .welcome-content h1 {
+    font-size:
+      22px;
+  }
+
+}
+
+/* =========================================
+   PREMIUM UPLOAD CARD
+========================================= */
+
+.upload-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 26px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(17, 32, 56, 0.96)
+    );
+
+  border:
+    1px solid
+    rgba(56, 189, 248, 0.12);
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.18);
+}
+
+
+/* Background glow */
+
+.upload-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: -120px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(56, 189, 248, 0.12);
+
+  filter:
+    blur(60px);
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================
+   UPLOAD INFO
+========================================= */
+
+.upload-info {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+.upload-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0ea5e9,
+      #2563eb
+    );
+
+  color:
+    white;
+
+  box-shadow:
+    0 8px 25px
+    rgba(14, 165, 233, 0.25);
+
+  animation:
+    uploadIconFloat
+    3s
+    ease-in-out
+    infinite;
+}
+
+
+.upload-icon span {
+  font-size:
+    24px;
+
+  font-weight:
+    300;
+}
+
+
+.upload-info h2 {
+  color:
+    #f8fafc;
+}
+
+
+.upload-info p {
+  color:
+    #94a3b8;
+}
+
+
+/* =========================================
+   FILE PICKER
+========================================= */
+
+.upload-controls {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+
+.file-picker {
+  flex: 1;
+
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding:
+    0 16px;
+
+  border:
+    1px dashed
+    rgba(148, 163, 184, 0.35);
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(15, 23, 42, 0.55);
+
+  cursor:
+    pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.file-picker:hover {
+  border-color:
+    #38bdf8;
+
+  background:
+    rgba(30, 41, 59, 0.8);
+
+  transform:
+    translateY(-2px);
+}
+
+
+.file-picker-content {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+
+.file-picker-icon {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background:
+    rgba(56, 189, 248, 0.1);
+
+  color:
+    #38bdf8;
+
+  font-size:
+    20px;
+}
+
+
+.file-picker-content strong {
+  display: block;
+
+  max-width: 300px;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  color:
+    #e2e8f0;
+
+  font-size:
+    12px;
+}
+
+
+.file-picker-content small {
+  display: block;
+
+  margin-top:
+    4px;
+
+  color:
+    #64748b;
+
+  font-size:
+    9px;
+}
+
+
+.file-picker input {
+  display:
+    none;
+}
+
+
+/* =========================================
+   UPLOAD BUTTON
+========================================= */
+
+.upload-button {
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  min-width:
+    135px;
+
+  height:
+    58px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  border:
+    none;
+
+  border-radius:
+    12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0ea5e9,
+      #2563eb
+    );
+
+  color:
+    white;
+
+  font-size:
+    12px;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 8px 25px
+    rgba(37, 99, 235, 0.25);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.upload-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 30px
+    rgba(37, 99, 235, 0.35);
+}
+
+
+.upload-button:active {
+  transform:
+    translateY(0);
+}
+
+
+.upload-button-icon {
+  font-size:
+    17px;
+}
+
+
+/* Shine animation */
+
+.upload-button::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    -100%;
+
+  width:
+    70%;
+
+  height:
+    100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.25),
+      transparent
+    );
+
+  transform:
+    skewX(-20deg);
+
+  transition:
+    left 0.6s ease;
+}
+
+
+.upload-button:hover::after {
+  left:
+    130%;
+}
+
+
+/* =========================================
+   UPLOADED SUCCESS
+========================================= */
+
+.uploaded-status {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  margin-top:
+    16px;
+
+  padding:
+    10px 13px;
+
+  border:
+    1px solid
+    rgba(34, 197, 94, 0.2);
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(34, 197, 94, 0.07);
+
+  color:
+    #86efac;
+
+  animation:
+    uploadSuccess
+    0.5s
+    ease-out;
+}
+
+
+@keyframes uploadIconFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-4px);
+  }
+
+}
+
+
+@keyframes uploadSuccess {
+
+  from {
+    opacity:
+      0;
+
+    transform:
+      translateY(8px);
+  }
+
+  to {
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .upload-controls {
+    flex-direction:
+      column;
+  }
+
+
+  .upload-button {
+    width:
+      100%;
+  }
+
+}
