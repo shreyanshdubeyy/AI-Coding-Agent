@@ -2,18 +2,6 @@
    GLOBAL
 ================================ */
 
-body {
-  background: red !important;
-}
-
-.topbar {
-  background: blue !important;
-}
-
-.sidebar {
-  background: green !important;
-}
-
 
 * {
   box-sizing: border-box;
@@ -2415,20 +2403,3 @@ body {
 
 }
 
-/* FINAL TEST */
-body {
-  background: red !important;
-}
-
-.app {
-  background: yellow !important;
-}
-
-.topbar {
-  background: blue !important;
-}
-
-.sidebar {
-  background: green !important;
-  width: 300px !important;
-}
