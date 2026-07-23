@@ -5823,3 +5823,126 @@ button {
   background: #0d111a !important;
   color: #699ce4 !important;
 }
+
+/* ========================================
+   FINAL PANEL DARK OVERRIDE
+   MUST BE AT THE VERY END OF App.css
+======================================== */
+
+.panel {
+  background: #0d111a !important;
+  border: 1px solid #252b34 !important;
+  color: #94a3b8 !important;
+}
+
+/* Code panel */
+.code-panel {
+  background: #0b0f16 !important;
+  border-color: #252b34 !important;
+  color: #94a3b8 !important;
+}
+
+/* AI Assistant / Chat panel */
+.chat-panel,
+.ai-assistant,
+.ai-panel,
+.assistant-panel,
+.chat-container {
+  background: #0d111a !important;
+  border-color: #252b34 !important;
+  color: #94a3b8 !important;
+}
+
+/* Panel headings */
+.panel h1,
+.panel h2,
+.panel h3,
+.chat-panel h1,
+.chat-panel h2,
+.chat-panel h3 {
+  color: #cbd5e1 !important;
+}
+
+/* Panel text */
+.panel p,
+.panel span,
+.chat-panel p,
+.chat-panel span {
+  color: #94a3b8 !important;
+}
+
+/* Editor file tab */
+.editor-file-tab {
+  background: #111722 !important;
+  border-color: #252b34 !important;
+  color: #94a3b8 !important;
+}
+
+/* Remove white from common panel children */
+.panel > div,
+.code-panel > div,
+.chat-panel > div {
+  background-color: transparent;
+}
+
+/* ========================================
+   ANALYSIS - COMPACT WIDTH
+======================================== */
+
+.analysis-dashboard {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 8px 0 !important;
+  padding: 10px 12px !important;
+}
+
+/* Make overview horizontal and compact */
+.analysis-overview {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+/* Quality score small */
+.quality-score-card {
+  width: 110px !important;
+  min-width: 110px !important;
+  padding: 8px !important;
+}
+
+/* Stats in one row */
+.analysis-stats {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 8px !important;
+  flex: 1 !important;
+}
+
+/* Small cards */
+.analysis-card {
+  padding: 8px !important;
+  min-height: 55px !important;
+}
+
+/* Hide large sections by default */
+.analysis-section {
+  margin-top: 8px !important;
+  padding: 8px !important;
+}
+
+/* Summary compact */
+.analysis-summary {
+  max-height: 45px;
+  overflow: hidden;
+}
+
+/* Issues compact */
+.issue-item {
+  padding: 7px !important;
+}
+
+/* Suggestions compact */
+.suggestion-item {
+  padding: 5px 0 !important;
+}
