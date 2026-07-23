@@ -5946,3 +5946,87 @@ button {
 .suggestion-item {
   padding: 5px 0 !important;
 }
+
+/* ========================================
+   FINAL DASHBOARD LAYOUT
+======================================== */
+
+.dashboard-layout {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+/* Main workspace gets all remaining space */
+.workspace {
+  flex: 1 !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+/* Analysis stays inside workspace */
+.workspace > .analysis-dashboard {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 16px 0 !important;
+}
+
+/* Code + AI remain equal */
+.main-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  width: 100% !important;
+  gap: 16px !important;
+}
+
+/* Both panels equal */
+.code-panel,
+.chat-panel {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Compact analysis */
+.analysis-dashboard {
+  padding: 16px !important;
+  border-radius: 16px !important;
+}
+
+.analysis-header {
+  margin-bottom: 12px !important;
+}
+
+.analysis-header h2 {
+  font-size: 20px !important;
+}
+
+.analysis-overview {
+  display: grid !important;
+  grid-template-columns: 140px 1fr !important;
+  gap: 12px !important;
+}
+
+.quality-score-card {
+  padding: 12px !important;
+}
+
+.score-circle {
+  margin: 8px 0 !important;
+}
+
+.score-circle strong {
+  font-size: 32px !important;
+}
+
+.analysis-stats {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 8px !important;
+}
+
+.analysis-card {
+  padding: 10px !important;
+}
+
+.analysis-section {
+  margin-top: 10px !important;
+  padding: 12px !important;
+}
