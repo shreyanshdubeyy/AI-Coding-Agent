@@ -5292,3 +5292,534 @@ body {
   background: #0b0e13;
   color: #d1d5db;
 }
+
+/* ========================================
+   MODERN CODE ANALYSIS
+======================================== */
+
+.analysis-dashboard {
+  margin: 20px;
+  padding: 26px;
+
+  background: #0d111a;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.07);
+
+  border-radius: 20px;
+
+  color: #e5e7eb;
+
+  animation:
+    analysisEnter 0.5s ease;
+}
+
+.analysis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 24px;
+}
+
+.analysis-label {
+  color: #818cf8;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.analysis-header h2 {
+  margin: 5px 0;
+
+  font-size: 24px;
+
+  color: #f8fafc;
+}
+
+.analysis-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.analysis-file {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  background: #111722;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.07);
+
+  border-radius: 10px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.file-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #818cf8;
+}
+
+.analysis-overview {
+  display: grid;
+
+  grid-template-columns:
+    180px 1fr;
+
+  gap: 16px;
+}
+
+.quality-score-card {
+  padding: 20px;
+
+  background: #111722;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 16px;
+
+  text-align: center;
+}
+
+.score-label {
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  color: #64748b;
+}
+
+.score-circle {
+  display: flex;
+
+  align-items: baseline;
+
+  justify-content: center;
+
+  margin: 15px 0 5px;
+}
+
+.score-circle strong {
+  font-size: 42px;
+
+  color: #a5b4fc;
+}
+
+.score-circle span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.quality-score-card p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.analysis-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 12px;
+}
+
+.analysis-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  background: #111722;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 14px;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.analysis-card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(129, 140, 248, 0.35);
+}
+
+.analysis-icon {
+  font-size: 22px;
+}
+
+.analysis-card span {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.analysis-card strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #f1f5f9;
+
+  font-size: 18px;
+}
+
+.analysis-section {
+  margin-top: 18px;
+
+  padding: 20px;
+
+  background: #111722;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 16px;
+}
+
+.section-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 12px;
+
+  color: #e2e8f0;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.analysis-summary {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+.issue-item {
+  padding: 14px;
+
+  margin-top: 10px;
+
+  background: #0c1017;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.05);
+
+  border-radius: 10px;
+}
+
+.issue-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.issue-header strong,
+.issue-item > strong {
+  color: #e2e8f0;
+
+  font-size: 13px;
+}
+
+.issue-item p {
+  margin: 7px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+.severity-badge {
+  padding: 4px 8px;
+
+  border-radius: 6px;
+
+  background: rgba(
+    239,
+    68,
+    68,
+    0.12
+  );
+
+  color: #f87171;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+.suggestion-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid
+    rgba(255, 255, 255, 0.05);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item > span {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 22px;
+  height: 22px;
+
+  border-radius: 6px;
+
+  background: rgba(
+    129,
+    140,
+    248,
+    0.12
+  );
+
+  color: #a5b4fc;
+
+  font-size: 10px;
+}
+
+.suggestion-item p {
+  margin: 2px 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+@keyframes analysisEnter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+/* ========================================
+   FINAL DARK THEME OVERRIDE
+   Keep all existing CSS above untouched
+======================================== */
+
+/* Main application */
+html,
+body,
+#root {
+  background: #080b12 !important;
+  color: #e5e7eb !important;
+}
+
+body {
+  background-color: #080b12 !important;
+}
+
+/* Main layout */
+.app,
+.dashboard-enter,
+.dashboard-layout,
+.main-content {
+  background: #080b12 !important;
+}
+
+/* Sidebar */
+.sidebar {
+  background: #0b0f17 !important;
+}
+
+/* Top bar */
+.topbar {
+  background: #0b0f17 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Code editor area */
+.code-editor,
+.editor-container,
+.editor-panel,
+.code-panel {
+  background: #0b0f16 !important;
+  color: #e5e7eb !important;
+}
+
+/* File tab - Untitled area */
+.editor-file-tab {
+  background: #111722 !important;
+  color: #e5e7eb !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.editor-file-name {
+  color: #cbd5e1 !important;
+}
+
+/* AI Assistant */
+.ai-assistant,
+.ai-panel,
+.assistant-panel,
+.chat-panel,
+.chat-container {
+  background: #0d111a !important;
+  color: #e5e7eb !important;
+}
+
+/* AI Assistant header */
+.ai-assistant h2,
+.ai-panel h2,
+.assistant-panel h2 {
+  color: #f8fafc !important;
+}
+
+.ai-assistant span,
+.ai-panel span,
+.assistant-panel span {
+  color: #94a3b8;
+}
+
+/* Chat messages */
+.message,
+.chat-message,
+.message-area {
+  background: transparent !important;
+  color: #151ce8 !important;
+}
+
+/* User message */
+.user-message {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+/* AI message */
+.ai-message {
+  background: #111722 !important;
+  color: #3715e1 !important;
+}
+
+/* Chat input */
+.chat-input,
+.chat-input-area,
+textarea,
+input {
+  background: #0b0f16 !important;
+  color: #699ce4 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Upload area */
+.upload-panel,
+.upload-container,
+.file-upload,
+.upload-box {
+  background: #0d111a !important;
+  color: #699ce4 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Analysis dashboard */
+.analysis-dashboard {
+  background: #0d111a !important;
+  color: #699ce4 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Analysis cards */
+.analysis-card,
+.quality-score-card,
+.analysis-section {
+  background: #111722 !important;
+  color: #699ce4 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Analysis issue cards */
+.issue-item {
+  background: #0c1017 !important;
+  color: #699ce4 !important;
+}
+
+/* Buttons */
+button {
+  color: #699ce4;
+}
+
+/* Common white surfaces */
+.card,
+.panel,
+.section,
+.workspace-card {
+  background: #0d111a !important;
+  color: #699ce4 !important;
+}
