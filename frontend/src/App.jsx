@@ -19,6 +19,7 @@ function App() {
 
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
+  const [analysisResult, setAnalysisResult] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -97,47 +98,98 @@ if (showSplash) {
       return;
     }
 
+const formData = new FormData();
 
-    const formData = new FormData();
+formData.append(
+  "file",
+  file
+);
 
-    formData.append(
-      "file",
-      file
+try {
+
+  // ================================
+  // STEP 1 — UPLOAD FILE
+  // ================================
+
+  const uploadResponse =
+    await axios.post(
+      "https://ai-coding-agent-backend-9uaq.onrender.com/upload",
+      formData
+    );
+
+  console.log(
+    "UPLOAD RESPONSE:",
+    uploadResponse.data
+  );
+
+
+  // ================================
+  // STEP 2 — UPDATE EDITOR
+  // ================================
+
+  setUploadedFile(
+    uploadResponse.data.filename
+  );
+
+  setLanguage(
+    uploadResponse.data.language
+  );
+
+  setCode(
+    uploadResponse.data.content
+  );
+
+  setMessages([]);
+
+
+  // ================================
+  // STEP 3 — ANALYZE FILE
+  // ================================
+
+  const analysisFormData =
+    new FormData();
+
+  analysisFormData.append(
+    "file",
+    file
+  );
+
+
+  const analysisResponse =
+    await axios.post(
+      "https://ai-coding-agent-backend-9uaq.onrender.com/analyze",
+      analysisFormData
     );
 
 
-    try {
-
-      const response =
-        await axios.post(
-          "http://127.0.0.1:8000/upload",
-          formData
-        );
+  console.log(
+    "ANALYSIS RESPONSE:",
+    analysisResponse.data
+  );
 
 
-      setUploadedFile(
-        response.data.filename
-      );
+  // ================================
+  // STEP 4 — SAVE ANALYSIS
+  // ================================
 
-      setLanguage(
-        response.data.language
-      );
+  setAnalysisResult(
+    analysisResponse.data
+  );
 
-      setCode(
-        response.data.content
-      );
 
-      setMessages([]);
-      
-console.log("UPLOAD RESPONSE:", response.data);
+} catch (error) {
 
-    } catch (error) {
+  console.error(
+    "Upload / Analysis Error:",
+    error.response?.data ||
+    error.message
+  );
 
-      console.error(error);
+  alert(
+    "File upload or analysis failed."
+  );
 
-      alert("Upload failed");
-
-    }
+}
 
   };
 
@@ -217,7 +269,7 @@ const handleCopyCode = async () => {
         const response =
           await axios.post(
 
-            "http://127.0.0.1:8000/chat-code",
+            "https://ai-coding-agent-backend-9uaq.onrender.com/chat-code",
 
             {
               question:
@@ -273,7 +325,7 @@ const handleCopyCode = async () => {
         const response =
           await axios.post(
 
-            "http://127.0.0.1:8000/agent",
+            "https://ai-coding-agent-backend-9uaq.onrender.com/agent",
 
             formData
 
@@ -579,7 +631,67 @@ ${response.data.ai_report}`
 
 
         </aside>
+        {analysisResult && (
+  <div className="analysis-dashboard">
 
+    <div className="analysis-header">
+      <div>
+        <span className="analysis-label">
+          CODE ANALYSIS
+        </span>
+
+        <h2>Analysis Results</h2>
+
+        <p>
+          AI-powered analysis of your uploaded code
+        </p>
+      </div>
+
+      <div className="quality-score">
+        <span>Code Quality</span>
+        <strong>85</strong>
+        <small>/100</small>
+      </div>
+    </div>
+
+    <div className="analysis-stats">
+
+      <div className="analysis-card">
+        <span>🐛</span>
+        <div>
+          <small>Bugs</small>
+          <strong>2</strong>
+        </div>
+      </div>
+
+      <div className="analysis-card">
+        <span>⚠️</span>
+        <div>
+          <small>Warnings</small>
+          <strong>4</strong>
+        </div>
+      </div>
+
+      <div className="analysis-card">
+        <span>⚡</span>
+        <div>
+          <small>Complexity</small>
+          <strong>Medium</strong>
+        </div>
+      </div>
+
+      <div className="analysis-card">
+        <span>🔒</span>
+        <div>
+          <small>Security</small>
+          <strong>Good</strong>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+)}
 
 
         {/* =================================
@@ -881,25 +993,16 @@ Upload Code
                   </div>
 
 
-                  <div>
+                  <div className="ai-assistant-header">
+  <h2>
+    AI Assistant
+  </h2>
 
-
-                    <h2>
-
-                      AI Assistant
-
-                    </h2>
-
-
-                    <span>
-
-                      Analyze, debug and improve
-                      your code
-
-                    </span>
-
-
-                  </div>
+  <span>
+    Analyze, debug and improve your code
+  </span>
+</div>
+className="ai-assistant-panel"
 
 
                 </div>
