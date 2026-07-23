@@ -347,7 +347,7 @@ ${response.data.ai_report}`
   return (
 
     
-    <div className="app">
+    <div className="app dashboard-enter">
 
 
       {/* =================================
@@ -587,13 +587,50 @@ ${response.data.ai_report}`
         ================================= */}
 
         
-        <main className="workspace">
+        <main className="workspace workspace-animate">
 
   {activePage === "dashboard" && (
     <>
            {/* =================================
-    DASHBOARD OVERVIEW
+    DASHBOARD WELCOME HEADER
 ================================= */}
+
+<div className="dashboard-welcome">
+
+  <div className="welcome-content">
+
+    <span className="welcome-eyebrow">
+      AI DEVELOPER WORKSPACE
+    </span>
+
+    <h1>
+      Welcome back, Developer <span>👋</span>
+    </h1>
+
+    <p>
+      Analyze, debug and improve your code with your AI coding workspace.
+    </p>
+
+  </div>
+
+
+  <div className="system-status-card">
+
+    <span className="system-status-dot"></span>
+
+    <div>
+      <strong>
+        System Operational
+      </strong>
+
+      <span>
+         -AI services are ready
+      </span>
+    </div>
+
+  </div>
+
+</div>
 
 
 
@@ -608,8 +645,8 @@ ${response.data.ai_report}`
 
 
               <div className="upload-icon">
-                ↑
-              </div>
+  <span>↑</span>
+</div>
 
 
               <div>
@@ -619,9 +656,8 @@ ${response.data.ai_report}`
                 </h2>
 
                 <p>
-                  Upload a supported source code file
-                  to start analyzing your project.
-                </p>
+  Upload your source code and let AI analyze, debug and improve it.
+</p>
 
               </div>
 
@@ -649,17 +685,29 @@ ${response.data.ai_report}`
                 />
 
 
-                <span>
+                <div className="file-picker-content">
 
-                  {file
+  <span className="file-picker-icon">
+    +
+  </span>
 
-                    ? file.name
+  <div>
+    <strong>
+      {file
+        ? file.name
+        : "Choose a code file"
+      }
+    </strong>
 
-                    : "Choose code file"
+    <small>
+      {file
+        ? "File selected and ready to upload"
+        : " Python, JavaScript, Java, C++, C supported"
+      }
+    </small>
+  </div>
 
-                  }
-
-                </span>
+</div>
 
 
               </label>
@@ -674,7 +722,11 @@ ${response.data.ai_report}`
 
               >
 
-                Upload Code
+               <span className="upload-button-icon">
+  ↑
+</span>
+
+Upload Code
 
               </button>
 
