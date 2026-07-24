@@ -14,6 +14,12 @@ The project combines **AI agents, automated code analysis tools, and a modern we
 
 ---
 
+## 🌐 Live Project
+
+👉 **[AI Coding Agent](https://ai-coding-agent-zeta.vercel.app/)**
+
+---
+
 ## ✨ Features
 
 ### 📂 Code Upload
