@@ -5893,7 +5893,7 @@ button {
   width: 100% !important;
   max-width: 100% !important;
   margin: 8px 0 !important;
-  padding: 10px 12px !important;
+  padding: 1px 12px !important;
 }
 
 /* Make overview horizontal and compact */
@@ -5942,10 +5942,7 @@ button {
   padding: 7px !important;
 }
 
-/* Suggestions compact */
-.suggestion-item {
-  padding: 5px 0 !important;
-}
+
 
 /* ========================================
    FINAL DASHBOARD LAYOUT

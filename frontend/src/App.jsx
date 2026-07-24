@@ -32,7 +32,6 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
 const [exitingSplash, setExitingSplash] = useState(false);
-
 useEffect(() => {
   const exitTimer = setTimeout(() => {
     setExitingSplash(true);
@@ -48,6 +47,18 @@ useEffect(() => {
   };
 }, []);
 
+
+/* Scroll workspace to top whenever sidebar page changes */
+useEffect(() => {
+  const workspace = document.querySelector(".workspace");
+
+  if (workspace) {
+    workspace.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+}, [activePage]);
 
   /* ================================
      UPLOAD CODE
@@ -628,6 +639,7 @@ ${response.data.ai_report}`
 
 
           </div>
+          </aside>
 
 
         
@@ -749,18 +761,6 @@ ${response.data.ai_report}`
       </div>
 
 
-      <div className="analysis-section">
-
-        <div className="section-title">
-          <span>✦</span>
-          Code Summary
-        </div>
-
-        <p className="analysis-summary">
-          {analysisResult.analysis.summary}
-        </p>
-
-      </div>
 
 
       {analysisResult.analysis.bugs?.length > 0 && (
@@ -849,43 +849,6 @@ ${response.data.ai_report}`
       )}
 
 
-      {analysisResult.analysis.suggestions?.length > 0 && (
-
-        <div className="analysis-section">
-
-          <div className="section-title">
-            <span>💡</span>
-            AI Suggestions
-          </div>
-
-          <div className="suggestion-list">
-
-            {analysisResult.analysis.suggestions.map(
-              (suggestion, index) => (
-
-                <div
-                  className="suggestion-item"
-                  key={index}
-                >
-
-                  <span>
-                    {index + 1}
-                  </span>
-
-                  <p>
-                    {suggestion}
-                  </p>
-
-                </div>
-
-              )
-            )}
-
-          </div>
-
-        </div>
-
-      )}
 
     </div>
   )}
@@ -1938,16 +1901,7 @@ Upload Code
 
       </div>
 
-      <div
-  style={{
-    background: "red",
-    color: "white",
-    padding: "50px",
-    fontSize: "30px"
-  }}
->
-  CSS TEST
-</div>
+      
 
 
       <div className="settings-section">
@@ -1979,7 +1933,7 @@ Upload Code
       
 
 
-     </aside> </div>
+      </div>
 
 
     </div>
