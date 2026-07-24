@@ -11,9 +11,25 @@ from tools.code_analyzer import analyze_code
 from tools.language_detector import detect_language
 from agent.agent import run_agent
 from storage.session import CURRENT_FILE, CHAT_HISTORY
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 
+from database.database import Base, engine, get_db
+from models.user import User
+from auth.jwt import create_access_token
+from auth.auth import get_current_user
 
 app = FastAPI()
+# Create database tables
+Base.metadata.create_all(bind=engine)
+
+# Password hashing
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,6 +51,109 @@ class ChatRequest(BaseModel):
 class CodeChatRequest(BaseModel):
     question: str
 
+class RegisterRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str    
+
+@app.post("/auth/register")
+def register(
+    request: RegisterRequest,
+    db: Session = Depends(get_db)
+):
+    # Check if user already exists
+    existing_user = db.query(User).filter(
+        User.email == request.email
+    ).first()
+
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
+
+    # Hash password
+    hashed_password = pwd_context.hash(
+        request.password
+    )
+
+    # Create user
+    new_user = User(
+        name=request.name,
+        email=request.email,
+        hashed_password=hashed_password
+    )
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return {
+        "success": True,
+        "message": "Account created successfully",
+        "user": {
+            "id": new_user.id,
+            "name": new_user.name,
+            "email": new_user.email
+        }
+    }
+
+@app.post("/auth/login")
+def login(
+    request: LoginRequest,
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(
+        User.email == request.email
+    ).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    # Verify password
+    if not pwd_context.verify(
+        request.password,
+        user.hashed_password
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    # Create JWT token
+    access_token = create_access_token({
+        "sub": str(user.id),
+        "email": user.email,
+        "name": user.name
+    })
+
+    return {
+        "success": True,
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        }
+    }
+
+@app.get("/auth/me")
+def get_me(
+    current_user=Depends(get_current_user)
+):
+    return {
+        "success": True,
+        "user": current_user
+    }
 
 @app.get("/")
 def home():

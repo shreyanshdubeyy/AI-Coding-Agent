@@ -13,12 +13,32 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function App() {
-
+const API_URL =
+  "https://ai-coding-agent-backend-9uaq.onrender.com";
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+  !!localStorage.getItem("access_token")
+);
 
+const [authMode, setAuthMode] = useState("login");
+
+const [authForm, setAuthForm] = useState({
+  name: "",
+  email: "",
+  password: ""
+});
+
+const [authLoading, setAuthLoading] = useState(false);
+const [authError, setAuthError] = useState("");
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
+  
+
+const [user, setUser] = useState(() => {
+  const savedUser = localStorage.getItem("user");
+  return savedUser ? JSON.parse(savedUser) : null;
+});
   const [analysisResult, setAnalysisResult] = useState(null);
 
   const [loading, setLoading] = useState(false);
@@ -73,6 +93,197 @@ if (showSplash) {
     />
   );
 }
+
+const handleAuth = async (e) => {
+  e.preventDefault();
+
+  setAuthLoading(true);
+  setAuthError("");
+
+  try {
+    const endpoint =
+      authMode === "login"
+        ? "https://ai-coding-agent-backend-9uaq.onrender.com/auth/login"
+        : "https://ai-coding-agent-backend-9uaq.onrender.com/auth/register";
+
+    const payload =
+      authMode === "login"
+        ? {
+            email: authForm.email,
+            password: authForm.password
+          }
+        : {
+            name: authForm.name,
+            email: authForm.email,
+            password: authForm.password
+          };
+
+    const response = await axios.post(endpoint, payload);
+
+    if (authMode === "login") {
+      localStorage.setItem(
+        "access_token",
+        response.data.access_token
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.user)
+      );
+setUser(response.data.user);
+      setIsAuthenticated(true);
+    } else {
+      setAuthMode("login");
+      setAuthError("Account created! Please login.");
+    }
+
+  } catch (error) {
+    console.error("Authentication error:", error);
+
+    setAuthError(
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "Authentication failed. Please try again."
+    );
+  } finally {
+    setAuthLoading(false);
+  }
+};
+
+
+
+
+if (!isAuthenticated) {
+  return (
+    <div className="auth-page">
+
+      <div className="auth-card">
+
+        <div className="auth-logo">
+          AI
+        </div>
+
+        <h1>
+          AI Coding Assistant
+        </h1>
+
+        <p className="auth-subtitle">
+          {authMode === "login"
+            ? "Welcome back, developer"
+            : "Create your developer account"
+          }
+        </p>
+
+        <div className="auth-tabs">
+
+          <button
+            className={authMode === "login" ? "active" : ""}
+            onClick={() => {
+              setAuthMode("login");
+              setAuthError("");
+            }}
+          >
+            Login
+          </button>
+
+          <button
+            className={authMode === "register" ? "active" : ""}
+            onClick={() => {
+              setAuthMode("register");
+              setAuthError("");
+            }}
+          >
+            Register
+          </button>
+
+        </div>
+
+        <form onSubmit={handleAuth}>
+
+          {authMode === "register" && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={authForm.name}
+              onChange={(e) =>
+                setAuthForm({
+                  ...authForm,
+                  name: e.target.value
+                })
+              }
+              required
+            />
+          )}
+
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={authForm.email}
+            onChange={(e) =>
+              setAuthForm({
+                ...authForm,
+                email: e.target.value
+              })
+            }
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={authForm.password}
+            onChange={(e) =>
+              setAuthForm({
+                ...authForm,
+                password: e.target.value
+              })
+            }
+            required
+          />
+
+          {authError && (
+            <div className="auth-error">
+              {authError}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="auth-submit"
+            disabled={authLoading}
+          >
+            {authLoading
+              ? "Please wait..."
+              : authMode === "login"
+                ? "Login"
+                : "Create Account"
+            }
+          </button>
+
+        </form>
+
+        <div className="auth-footer">
+          AI-powered developer workspace
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+const handleLogout = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("user");
+
+  setUser(null);
+  setIsAuthenticated(false);
+  setMessages([]);
+  setUploadedFile(null);
+  setCode("");
+  setLanguage("");
+  setAnalysisResult(null);
+};
+
   const handleUpload = async () => {
 
     if (!file) {
@@ -615,30 +826,46 @@ ${response.data.ai_report}`
 
 
             <div className="user-profile">
+              
+
+  <div className="user-avatar">
+    {user?.name
+      ? user.name
+          .split(" ")
+          .map(word => word[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase()
+      : "SD"
+    }
+  </div>
+
+  <div>
+
+    <strong>
+      {user?.name || "Developer"}
+    </strong>
+
+    <span>
+      {user?.email || "AI Workspace"}
+    </span>
+
+  </div>
+
+</div>
+
+<button
+    className="logout-button"
+    onClick={handleLogout}
+  >
+    <span>↪</span>
+    Logout
+  </button>
+
+</div>
 
 
-              <div className="user-avatar">
-                SD
-              </div>
-
-
-              <div>
-
-                <strong>
-                  Developer
-                </strong>
-
-                <span>
-                  AI Workspace
-                </span>
-
-              </div>
-
-
-            </div>
-
-
-          </div>
+          
           </aside>
 
 
@@ -869,8 +1096,8 @@ ${response.data.ai_report}`
     </span>
 
     <h1>
-      Welcome back, Developer <span>👋</span>
-    </h1>
+  Welcome back, {user?.name || "Developer"} <span>👋</span>
+</h1>
 
     <p>
       Analyze, debug and improve your code with your AI coding workspace.
