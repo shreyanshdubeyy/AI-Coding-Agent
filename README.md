@@ -5,7 +5,7 @@ An intelligent AI-powered developer workspace that analyzes source code, detects
 
 🚀 Live Demo
 
-🌐 Frontend:"ai-coding-agent-zeta.vercel.app"
+🌐 Frontend:"https://ai-coding-agent-zeta.vercel.app"
 
 ⚙️ Backend API: "https://ai-coding-agent-backend-9uaq.onrender.com"
 
