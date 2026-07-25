@@ -13,8 +13,7 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function App() {
-const API_URL =
-  "https://ai-coding-agent-backend-9uaq.onrender.com";
+const API_URL = "http://127.0.0.1:8000";
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -33,7 +32,17 @@ const [authLoading, setAuthLoading] = useState(false);
 const [authError, setAuthError] = useState("");
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
-  
+  const [forgotMode, setForgotMode] = useState(false);
+const [resetStep, setResetStep] = useState(1);
+
+const [resetForm, setResetForm] = useState({
+  email: "",
+  otp: "",
+  new_password: ""
+});
+
+const [resetLoading, setResetLoading] = useState(false);
+const [resetMessage, setResetMessage] = useState("");
 
 const [user, setUser] = useState(() => {
   const savedUser = localStorage.getItem("user");
@@ -46,7 +55,41 @@ const [user, setUser] = useState(() => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("");
   const [activePage, setActivePage] = useState("dashboard");
-  
+  const [aiAssistantEnabled, setAiAssistantEnabled] = useState(() => {
+  return localStorage.getItem("aiAssistantEnabled") !== "false";
+});
+
+const [codeAnalysisEnabled, setCodeAnalysisEnabled] = useState(() => {
+  return localStorage.getItem("codeAnalysisEnabled") !== "false";
+});
+const [passwordForm, setPasswordForm] = useState({
+  current_password: "",
+  new_password: "",
+  confirm_password: ""
+});
+
+const [passwordMessage, setPasswordMessage] = useState("");
+const [passwordLoading, setPasswordLoading] = useState(false);
+const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem("darkMode") === "true";
+});
+const toggleAiAssistant = () => {
+  const newValue = !aiAssistantEnabled;
+
+  setAiAssistantEnabled(newValue);
+  localStorage.setItem("aiAssistantEnabled", newValue);
+};
+
+const toggleCodeAnalysis = () => {
+  const newValue = !codeAnalysisEnabled;
+
+  setCodeAnalysisEnabled(newValue);
+  localStorage.setItem("codeAnalysisEnabled", newValue);
+};
+
+const toggleDarkMode = () => {
+  setDarkMode((prev) => !prev);
+};
 
   const [mode, setMode] = useState("chat");
   const [copied, setCopied] = useState(false);
@@ -67,7 +110,11 @@ useEffect(() => {
   };
 }, []);
 
+useEffect(() => {
+  document.body.classList.toggle("dark-mode", darkMode);
 
+  localStorage.setItem("darkMode", darkMode);
+}, [darkMode]);
 /* Scroll workspace to top whenever sidebar page changes */
 useEffect(() => {
   const workspace = document.querySelector(".workspace");
@@ -93,6 +140,76 @@ if (showSplash) {
     />
   );
 }
+const handleChangePassword = async (e) => {
+  e.preventDefault();
+
+  setPasswordMessage("");
+
+  if (
+    !passwordForm.current_password ||
+    !passwordForm.new_password ||
+    !passwordForm.confirm_password
+  ) {
+    setPasswordMessage("Please fill all password fields.");
+    return;
+  }
+
+  if (
+    passwordForm.new_password !==
+    passwordForm.confirm_password
+  ) {
+    setPasswordMessage("New passwords do not match.");
+    return;
+  }
+
+  if (passwordForm.new_password.length < 6) {
+    setPasswordMessage(
+      "New password must be at least 6 characters."
+    );
+    return;
+  }
+
+  setPasswordLoading(true);
+
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/auth/change-password",
+      {
+        email: user.email,
+        current_password:
+          passwordForm.current_password,
+        new_password:
+          passwordForm.new_password
+      }
+    );
+
+    if (response.data.success) {
+      setPasswordMessage(
+        "Password changed successfully!"
+      );
+
+      setPasswordForm({
+        current_password: "",
+        new_password: "",
+        confirm_password: ""
+      });
+    }
+
+  } catch (error) {
+    console.error(
+      "Change password error:",
+      error
+    );
+
+    setPasswordMessage(
+      error.response?.data?.detail ||
+      "Unable to change password."
+    );
+
+  } finally {
+    setPasswordLoading(false);
+  }
+};
 
 const handleAuth = async (e) => {
   e.preventDefault();
@@ -103,8 +220,8 @@ const handleAuth = async (e) => {
   try {
     const endpoint =
       authMode === "login"
-        ? "https://ai-coding-agent-backend-9uaq.onrender.com/auth/login"
-        : "https://ai-coding-agent-backend-9uaq.onrender.com/auth/register";
+        ? "http://127.0.0.1:8000/auth/login"
+        : "http://127.0.0.1:8000/auth/register";
 
     const payload =
       authMode === "login"
@@ -150,12 +267,261 @@ setUser(response.data.user);
   }
 };
 
+const handleForgotPassword = async (e) => {
+  e.preventDefault();
 
+  setResetLoading(true);
+  setResetMessage("");
+
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/auth/forgot-password",
+      {
+        email: resetForm.email
+      }
+    );
+
+    if (response.data.success) {
+      setResetMessage(
+        "OTP generated successfully. Check the backend terminal for the OTP."
+      );
+
+      setResetStep(2);
+    } else {
+      setResetMessage(
+        response.data.message || "Unable to generate OTP."
+      );
+    }
+
+  } catch (error) {
+    console.error("Forgot password error:", error);
+
+    setResetMessage(
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "Something went wrong. Please try again."
+    );
+  } finally {
+    setResetLoading(false);
+  }
+};
+
+
+const handleResetPassword = async (e) => {
+  e.preventDefault();
+
+  setResetLoading(true);
+  setResetMessage("");
+
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/auth/reset-password",
+      {
+        email: resetForm.email,
+        otp: resetForm.otp,
+        new_password: resetForm.new_password
+      }
+    );
+
+    if (response.data.success) {
+
+      setResetMessage(
+        "Password reset successfully! You can now login."
+      );
+
+      setTimeout(() => {
+        setForgotMode(false);
+        setResetStep(1);
+        setResetMessage("");
+
+        setAuthMode("login");
+
+        setAuthForm({
+          name: "",
+          email: resetForm.email,
+          password: ""
+        });
+
+        setResetForm({
+          email: "",
+          otp: "",
+          new_password: ""
+        });
+
+      }, 1500);
+
+    } else {
+      setResetMessage(
+        response.data.message ||
+        "Password reset failed."
+      );
+    }
+
+  } catch (error) {
+    console.error("Reset password error:", error);
+
+    setResetMessage(
+      error.response?.data?.detail ||
+      error.response?.data?.message ||
+      "Invalid or expired OTP."
+    );
+
+  } finally {
+    setResetLoading(false);
+  }
+};
 
 
 if (!isAuthenticated) {
   return (
     <div className="auth-page">
+
+      {forgotMode ? (
+  <div className="auth-card">
+
+    <div className="auth-logo">
+      AI
+    </div>
+
+    <h1>
+      Reset Password
+    </h1>
+
+    <p className="auth-subtitle">
+      {resetStep === 1
+        ? "Enter your registered email"
+        : "Enter the OTP and create a new password"
+      }
+    </p>
+
+
+    {/* STEP 1 — EMAIL */}
+    {resetStep === 1 && (
+
+      <form onSubmit={handleForgotPassword}>
+
+        <input
+          type="email"
+          placeholder="Email Address"
+          value={resetForm.email}
+          onChange={(e) =>
+            setResetForm({
+              ...resetForm,
+              email: e.target.value
+            })
+          }
+          required
+        />
+
+        {resetMessage && (
+          <div className="auth-error">
+            {resetMessage}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="auth-submit"
+          disabled={resetLoading}
+        >
+          {resetLoading
+            ? "Sending OTP..."
+            : "Send OTP"
+          }
+        </button>
+
+      </form>
+
+    )}
+
+{/* STEP 2 — OTP + NEW PASSWORD */}
+{resetStep === 2 && (
+
+  <form onSubmit={handleResetPassword}>
+
+    <input
+      type="email"
+      placeholder="Email Address"
+      value={resetForm.email}
+      disabled
+      autoComplete="off"
+    />
+
+    <input
+      type="text"
+      placeholder="Enter 6-digit OTP"
+      maxLength="6"
+      value={resetForm.otp}
+      onChange={(e) =>
+        setResetForm({
+          ...resetForm,
+          otp: e.target.value
+        })
+      }
+      autoComplete="one-time-code"
+      inputMode="numeric"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="Enter New Password"
+      value={resetForm.new_password}
+      onChange={(e) =>
+        setResetForm({
+          ...resetForm,
+          new_password: e.target.value
+        })
+      }
+      autoComplete="new-password"
+      required
+    />
+
+    {resetMessage && (
+      <div className="auth-error">
+        {resetMessage}
+      </div>
+    )}
+
+    <button
+      type="submit"
+      className="auth-submit"
+      disabled={resetLoading}
+    >
+      {resetLoading
+        ? "Resetting..."
+        : "Reset Password"
+      }
+    </button>
+
+  </form>
+
+)}
+
+
+    <button
+      type="button"
+      className="forgot-password-button"
+      onClick={() => {
+        setForgotMode(false);
+        setResetStep(1);
+        setResetMessage("");
+      }}
+    >
+      ← Back to Login
+    </button>
+
+    <div className="auth-footer">
+      AI-powered developer workspace
+    </div>
+
+  </div>
+
+) : (
+
+  // YAHAN TUMHARA EXISTING LOGIN / REGISTER AUTH CARD HOGA
+
+
 
       <div className="auth-card">
 
@@ -246,19 +612,39 @@ if (!isAuthenticated) {
               {authError}
             </div>
           )}
+{authMode === "login" && (
+  <button
+    type="button"
+    className="forgot-password-button"
+    onClick={() => {
+      setForgotMode(true);
+      setResetStep(1);
+      setResetMessage("");
 
-          <button
-            type="submit"
-            className="auth-submit"
-            disabled={authLoading}
-          >
-            {authLoading
-              ? "Please wait..."
-              : authMode === "login"
-                ? "Login"
-                : "Create Account"
-            }
-          </button>
+      setResetForm({
+        email: authForm.email,
+        otp: "",
+        new_password: ""
+      });
+    }}
+  >
+    <span className="forgot-icon">🔐</span>
+    <span>Forgot Password?</span>
+  </button>
+)}
+
+<button
+  type="submit"
+  className="auth-submit"
+  disabled={authLoading}
+>
+  {authLoading
+    ? "Please wait..."
+    : authMode === "login"
+      ? "Login"
+      : "Create Account"
+  }
+</button>
 
         </form>
 
@@ -267,7 +653,7 @@ if (!isAuthenticated) {
         </div>
 
       </div>
-
+)}
     </div>
   );
 }
@@ -2065,7 +2451,6 @@ Upload Code
 {/* =================================
     SETTINGS PAGE
 ================================= */}
-
 {activePage === "settings" && (
 
   <section className="page-container">
@@ -2090,10 +2475,145 @@ Upload Code
 
 
     <div className="settings-card">
+{/* PROFILE SETTINGS */}
+
+<div className="settings-section settings-profile">
+
+  <div className="settings-info">
+    <h3>
+      Profile
+    </h3>
+
+    <p>
+      Manage your personal information and account details.
+    </p>
+  </div>
+
+  <div className="profile-settings-form">
+
+    <input
+      type="text"
+      placeholder="Your Name"
+      value={user?.name || ""}
+      onChange={(e) =>
+        setUser({
+          ...user,
+          name: e.target.value
+        })
+      }
+    />
+
+    <input
+      type="email"
+      placeholder="Email Address"
+      value={user?.email || ""}
+      disabled
+    />
+
+    <button
+      className="settings-save-button"
+      onClick={() => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(user)
+        );
+
+        alert("Profile updated successfully!");
+      }}
+    >
+      Save Profile
+    </button>
+
+  </div>
+
+</div>
+
+{/* CHANGE PASSWORD */}
+
+<div className="settings-section settings-password">
+
+  <div className="settings-info">
+    <h3>
+      Change Password
+    </h3>
+
+    <p>
+      Update your account password to keep your workspace secure.
+    </p>
+  </div>
+
+  <form
+    className="password-settings-form"
+    onSubmit={handleChangePassword}
+  >
+
+    <input
+      type="password"
+      placeholder="Current Password"
+      value={passwordForm.current_password}
+      onChange={(e) =>
+        setPasswordForm({
+          ...passwordForm,
+          current_password: e.target.value
+        })
+      }
+      autoComplete="current-password"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="New Password"
+      value={passwordForm.new_password}
+      onChange={(e) =>
+        setPasswordForm({
+          ...passwordForm,
+          new_password: e.target.value
+        })
+      }
+      autoComplete="new-password"
+      required
+    />
+
+    <input
+      type="password"
+      placeholder="Confirm New Password"
+      value={passwordForm.confirm_password}
+      onChange={(e) =>
+        setPasswordForm({
+          ...passwordForm,
+          confirm_password: e.target.value
+        })
+      }
+      autoComplete="new-password"
+      required
+    />
+
+    {passwordMessage && (
+      <div className="settings-password-message">
+        {passwordMessage}
+      </div>
+    )}
+
+    <button
+      type="submit"
+      className="settings-save-button"
+      disabled={passwordLoading}
+    >
+      {passwordLoading
+        ? "Updating..."
+        : "Update Password"
+      }
+    </button>
+
+  </form>
+
+</div> 
+      {/* AI ASSISTANT */}
 
       <div className="settings-section">
 
-        <div>
+        <div className="settings-info">
           <h3>
             AI Assistant
           </h3>
@@ -2103,18 +2623,25 @@ Upload Code
           </p>
         </div>
 
-        <span className="settings-status">
-          Enabled
-        </span>
+        <button
+          className={`settings-toggle ${
+            aiAssistantEnabled ? "active" : ""
+          }`}
+          onClick={toggleAiAssistant}
+        >
+          <span className="toggle-circle"></span>
+        </button>
 
       </div>
 
 
+      {/* CODE ANALYSIS */}
+
       <div className="settings-section">
 
-        <div>
+        <div className="settings-info">
           <h3>
-            Code Analysis
+            Automatic Code Analysis
           </h3>
 
           <p>
@@ -2122,18 +2649,49 @@ Upload Code
           </p>
         </div>
 
-        <span className="settings-status">
-          Active
-        </span>
+        <button
+          className={`settings-toggle ${
+            codeAnalysisEnabled ? "active" : ""
+          }`}
+          onClick={toggleCodeAnalysis}
+        >
+          <span className="toggle-circle"></span>
+        </button>
 
       </div>
 
-      
 
+      {/* APPEARANCE */}
 
       <div className="settings-section">
 
-        <div>
+        <div className="settings-info">
+          <h3>
+            Dark Mode
+          </h3>
+
+          <p>
+            Use a darker interface for comfortable coding.
+          </p>
+        </div>
+
+        <button
+          className={`settings-toggle ${
+            darkMode ? "active" : ""
+          }`}
+          onClick={toggleDarkMode}
+        >
+          <span className="toggle-circle"></span>
+        </button>
+
+      </div>
+
+
+      {/* WORKSPACE STATUS */}
+
+      <div className="settings-section">
+
+        <div className="settings-info">
           <h3>
             Workspace
           </h3>

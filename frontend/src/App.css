@@ -6476,3 +6476,379 @@ button {
   padding: 8px;
   margin-top: 12px;
 }
+/* ========================================
+   FORGOT PASSWORD BUTTON
+======================================== */
+
+.forgot-password-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  margin-top: 14px;
+  padding: 8px 14px;
+
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.forgot-password-button:hover {
+  color: #2563eb;
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.forgot-password-button:active {
+  transform: translateY(0);
+}
+
+.forgot-icon {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.forgot-password-button:hover .forgot-icon {
+  transform: scale(1.1);
+}
+/* ========================================
+   SETTINGS PAGE
+======================================== */
+
+.settings-info {
+  flex: 1;
+}
+
+.settings-toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  padding: 0;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #cbd5e1;
+
+  cursor: pointer;
+
+  transition: background 0.25s ease;
+}
+
+.settings-toggle.active {
+  background: #2563eb;
+}
+
+.toggle-circle {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+  background: white;
+
+  transition: transform 0.25s ease;
+}
+
+.settings-toggle.active .toggle-circle {
+  transform: translateX(22px);
+}
+
+.settings-toggle:hover {
+  transform: scale(1.05);
+}
+
+.settings-status {
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+/* ========================================
+   PROFILE SETTINGS
+======================================== */
+
+.settings-profile {
+  align-items: flex-start;
+}
+
+.profile-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 280px;
+}
+
+.profile-settings-form input {
+  width: 100%;
+  padding: 11px 13px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition: border 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.profile-settings-form input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.profile-settings-form input:disabled {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.settings-save-button {
+  padding: 10px 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.settings-save-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   CHANGE PASSWORD
+======================================== */
+
+.settings-password {
+  align-items: flex-start;
+}
+
+.password-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 280px;
+}
+
+.password-settings-form input {
+  width: 100%;
+  padding: 11px 13px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.password-settings-form input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.password-settings-message {
+  padding: 8px 10px;
+
+  border-radius: 7px;
+
+  background: #f8fafc;
+  color: #475569;
+
+  font-size: 12px;
+}
+
+/* ========================================
+   LIGHT MODE — DEFAULT
+======================================== */
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.app-container {
+  background: #f8fafc;
+}
+
+.main-content {
+  background: #f8fafc;
+}
+
+
+/* ========================================
+   DARK MODE
+======================================== */
+
+body.dark-mode {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+body.dark-mode .app-container {
+  background: #0f172a;
+}
+
+body.dark-mode .main-content {
+  background: #0f172a;
+}
+
+
+/* SIDEBAR */
+
+body.dark-mode .sidebar {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+body.dark-mode .sidebar-item {
+  color: #94a3b8;
+}
+
+body.dark-mode .sidebar-item:hover {
+  background: #1e293b;
+  color: #f8fafc;
+}
+
+body.dark-mode .sidebar-item.active {
+  background: #1e3a8a;
+  color: #ffffff;
+}
+
+
+/* PAGE HEADER */
+
+body.dark-mode .page-eyebrow {
+  color: #60a5fa;
+}
+
+body.dark-mode .page-header h1 {
+  color: #f8fafc;
+}
+
+body.dark-mode .page-header p {
+  color: #94a3b8;
+}
+
+
+/* SETTINGS */
+
+body.dark-mode .settings-card {
+  background: #111827;
+  border-color: #1f2937;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .settings-section {
+  border-color: #1f2937;
+}
+
+body.dark-mode .settings-info h3 {
+  color: #f8fafc;
+}
+
+body.dark-mode .settings-info p {
+  color: #94a3b8;
+}
+
+
+/* INPUTS */
+
+body.dark-mode .profile-settings-form input,
+body.dark-mode .password-settings-form input {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .profile-settings-form input::placeholder,
+body.dark-mode .password-settings-form input::placeholder {
+  color: #64748b;
+}
+
+
+/* USER PROFILE */
+
+body.dark-mode .user-profile {
+  border-color: #1f2937;
+}
+
+body.dark-mode .user-profile strong {
+  color: #f8fafc;
+}
+
+body.dark-mode .user-profile span {
+  color: #94a3b8;
+}
+
+
+/* LOGOUT */
+
+body.dark-mode .logout-button {
+  color: #94a3b8;
+}
+
+body.dark-mode .logout-button:hover {
+  background: #1e293b;
+  color: #f87171;
+}
+
+
+/* STATUS */
+
+body.dark-mode .settings-status {
+  background: #052e16;
+  color: #4ade80;
+}
+
+
+/* PASSWORD MESSAGE */
+
+body.dark-mode .settings-password-message {
+  background: #1e293b;
+  color: #cbd5e1;
+}
