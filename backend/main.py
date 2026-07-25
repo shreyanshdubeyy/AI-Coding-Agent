@@ -1,8 +1,11 @@
 
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+import random
+from datetime import datetime, timedelta
+from pydantic import BaseModel, EmailStr
 from llm import ask_llm
+
 
 print("THIS IS THE MAIN FILE BEING LOADED")
 
@@ -24,6 +27,7 @@ from auth.auth import get_current_user
 app = FastAPI()
 # Create database tables
 Base.metadata.create_all(bind=engine)
+RESET_OTPS = {}
 
 # Password hashing
 pwd_context = CryptContext(
@@ -53,13 +57,27 @@ class CodeChatRequest(BaseModel):
 
 class RegisterRequest(BaseModel):
     name: str
-    email: str
+    email: EmailStr
     password: str
 
 
 class LoginRequest(BaseModel):
     email: str
-    password: str    
+    password: str   
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    otp: str
+    new_password: str     
+
+class ChangePasswordRequest(BaseModel):
+    email: EmailStr
+    current_password: str
+    new_password: str
 
 @app.post("/auth/register")
 def register(
@@ -112,23 +130,28 @@ def login(
         User.email == request.email
     ).first()
 
+    print("LOGIN EMAIL:", request.email)
+    print("USER FOUND:", user is not None)
+
     if not user:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
-    # Verify password
-    if not pwd_context.verify(
+    password_match = pwd_context.verify(
         request.password,
         user.hashed_password
-    ):
+    )
+
+    print("PASSWORD MATCH:", password_match)
+
+    if not password_match:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
-    # Create JWT token
     access_token = create_access_token({
         "sub": str(user.id),
         "email": user.email,
@@ -146,6 +169,43 @@ def login(
         }
     }
 
+@app.post("/auth/change-password")
+def change_password(
+    request: ChangePasswordRequest,
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(
+        User.email == request.email
+    ).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    # Verify current password
+    if not pwd_context.verify(
+        request.current_password,
+        user.hashed_password
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Current password is incorrect"
+        )
+
+    # Hash new password
+    user.hashed_password = pwd_context.hash(
+        request.new_password
+    )
+
+    db.commit()
+
+    return {
+        "success": True,
+        "message": "Password changed successfully"
+    }    
+
 @app.get("/auth/me")
 def get_me(
     current_user=Depends(get_current_user)
@@ -154,7 +214,95 @@ def get_me(
         "success": True,
         "user": current_user
     }
+@app.post("/auth/forgot-password")
+def forgot_password(
+    request: ForgotPasswordRequest,
+    db: Session = Depends(get_db)
+):
 
+    user = db.query(User).filter(
+        User.email == request.email
+    ).first()
+
+    if not user:
+        return {
+            "success": False,
+            "message": "No account found with this email."
+        }
+
+    otp = str(random.randint(100000, 999999))
+
+    RESET_OTPS[request.email] = {
+        "otp": otp,
+        "expires_at": datetime.utcnow() + timedelta(minutes=10)
+    }
+
+    print("PASSWORD RESET OTP:", otp)
+
+    return {
+        "success": True,
+        "message": "OTP generated successfully.",
+        "otp": otp
+    }
+
+    
+
+@app.post("/auth/reset-password")
+def reset_password(
+    request: ResetPasswordRequest,
+    db: Session = Depends(get_db)
+):
+    # Check if OTP exists
+    reset_data = RESET_OTPS.get(request.email)
+
+    if not reset_data:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or expired OTP"
+        )
+
+    # Check OTP
+    if reset_data["otp"] != request.otp:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid OTP"
+        )
+
+    # Check OTP expiry
+    if datetime.utcnow() > reset_data["expires_at"]:
+        del RESET_OTPS[request.email]
+
+        raise HTTPException(
+            status_code=400,
+            detail="OTP has expired"
+        )
+
+    # Find user
+    user = db.query(User).filter(
+        User.email == request.email
+    ).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    # Hash new password
+    user.hashed_password = pwd_context.hash(
+        request.new_password
+    )
+
+    # Save changes
+    db.commit()
+
+    # Remove used OTP
+    del RESET_OTPS[request.email]
+
+    return {
+        "success": True,
+        "message": "Password reset successfully"
+    }    
 @app.get("/")
 def home():
     return {"message": "AI Coding Agent Backend is running!"}
