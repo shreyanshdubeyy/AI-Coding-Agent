@@ -13,7 +13,7 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function App() {
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://ai-coding-agent-backend-9uaq.onrender.com";
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -173,7 +173,7 @@ const handleChangePassword = async (e) => {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/auth/change-password",
+      "https://ai-coding-agent-backend-9uaq.onrender.com/auth/change-password",
       {
         email: user.email,
         current_password:
@@ -220,8 +220,8 @@ const handleAuth = async (e) => {
   try {
     const endpoint =
       authMode === "login"
-        ? "http://127.0.0.1:8000/auth/login"
-        : "http://127.0.0.1:8000/auth/register";
+        ? "https://ai-coding-agent-backend-9uaq.onrender.com/auth/login"
+        : "https://ai-coding-agent-backend-9uaq.onrender.com/auth/register";
 
     const payload =
       authMode === "login"
@@ -275,7 +275,7 @@ const handleForgotPassword = async (e) => {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/auth/forgot-password",
+      "https://ai-coding-agent-backend-9uaq.onrender.com/auth/forgot-password",
       {
         email: resetForm.email
       }
@@ -315,7 +315,7 @@ const handleResetPassword = async (e) => {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/auth/reset-password",
+      "https://ai-coding-agent-backend-9uaq.onrender.com/auth/reset-password",
       {
         email: resetForm.email,
         otp: resetForm.otp,
