@@ -1649,3 +1649,38 @@ body {
   }
 
 }
+
+/* ================================
+   UPSIDE DOWN PARTICLE BACKGROUND
+================================ */
+
+.upside-down-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Keep dashboard content above particles */
+
+.topbar,
+.dashboard-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.workspace,
+.sidebar {
+  position: relative;
+  z-index: 1;
+}

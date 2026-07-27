@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./SplashScreen.css";
+import UpsideDownParticles from "./UpsideDownParticles";
 
 export default function SplashScreen({ exiting }) {
-  const [status, setStatus] = useState("Initializing AI Engine...");
+  const [status, setStatus] = useState(
+    "Initializing AI Engine..."
+  );
 
   useEffect(() => {
     const timer1 = setTimeout(() => {
@@ -25,24 +28,48 @@ export default function SplashScreen({ exiting }) {
   }, []);
 
   return (
-    <div className={`splash-screen ${exiting ? "splash-exit" : ""}`}>
+    <div
+      className={`splash-screen ${
+        exiting ? "splash-exit" : ""
+      }`}
+    >
 
-      {/* Animated Background */}
+      {/* ================================
+          DENSE BLUE CURSOR PARTICLES
+      ================================= */}
+
+      <UpsideDownParticles />
+
+
+      {/* ================================
+          ANIMATED BACKGROUND
+      ================================= */}
+
       <div className="splash-grid"></div>
 
       <div className="splash-glow glow-one"></div>
       <div className="splash-glow glow-two"></div>
 
-      {/* Floating Particles */}
+
+      {/* ================================
+          FLOATING PARTICLES
+      ================================= */}
+
       <div className="particle particle-one"></div>
       <div className="particle particle-two"></div>
       <div className="particle particle-three"></div>
       <div className="particle particle-four"></div>
       <div className="particle particle-five"></div>
 
+
+      {/* ================================
+          MAIN SPLASH CONTENT
+      ================================= */}
+
       <div className="splash-content">
 
         {/* AI Logo */}
+
         <div className="ai-logo-wrapper">
 
           <div className="ai-logo-ring"></div>
@@ -53,17 +80,23 @@ export default function SplashScreen({ exiting }) {
 
         </div>
 
+
         {/* App Name */}
+
         <h1>
           AI <span>Coding Agent</span>
         </h1>
 
+
         {/* Subtitle */}
+
         <p className="splash-subtitle">
           Your Intelligent Coding Assistant
         </p>
 
+
         {/* Loading */}
+
         <div className="loading-container">
 
           <div className="loading-bar">
@@ -71,15 +104,22 @@ export default function SplashScreen({ exiting }) {
           </div>
 
           <div className="loading-status">
+
             <span className="status-dot"></span>
+
             {status}
+
           </div>
 
         </div>
 
       </div>
 
-      {/* Bottom Text */}
+
+      {/* ================================
+          BOTTOM TEXT
+      ================================= */}
+
       <div className="splash-footer">
         Powered by Artificial Intelligence
       </div>

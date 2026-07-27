@@ -7,7 +7,7 @@ import "./App.css";
 import {
   Prism as SyntaxHighlighter
 } from "react-syntax-highlighter";
-
+import UpsideDownParticles from "./components/UpsideDownParticles";
 import {
   vscDarkPlus
 } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -375,6 +375,8 @@ const handleResetPassword = async (e) => {
 if (!isAuthenticated) {
   return (
     <div className="auth-page">
+
+      <UpsideDownParticles />
 
       {forgotMode ? (
   <div className="auth-card">
