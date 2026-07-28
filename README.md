@@ -1,129 +1,285 @@
+# 🤖 AI Coding Agent
 
-🤖 AI Coding Agent
+An intelligent full-stack AI-powered coding assistant that analyzes source code, detects potential issues, evaluates code quality, checks complexity, and provides actionable recommendations through an interactive developer workspace.
 
-An intelligent AI-powered developer workspace that analyzes source code, detects issues, runs code quality checks, and helps developers understand and improve their code through an AI assistant.
+Built with **React, Vite, FastAPI, Python, Groq LLM, JWT Authentication, and automated code analysis tools**.
 
-🚀 Live Demo
+---
 
-🌐 Frontend:"https://ai-coding-agent-zeta.vercel.app"
+## 🚀 Live Demo
 
-⚙️ Backend API: "https://ai-coding-agent-backend-9uaq.onrender.com"
+🌐 **Frontend:** "https://ai-coding-agent-zeta.vercel.app"
 
-📚 API Documentation: "https://ai-coding-agent-backend-9uaq.onrender.com/docs"
+⚙️ **Backend API**: "https://ai-coding-agent-backend-9uaq.onrender.com"
+
+📚 **API Documentation**: "https://ai-coding-agent-backend-9uaq.onrender.com/docs"
 
 
-📌 Overview
 
-AI Coding Agent is an AI-powered coding assistant designed to make code analysis and debugging easier for developers.
+> **Note:** The application may take a few seconds to respond if the backend is hosted on a free-tier service.
 
-Users can upload their source code and get automated insights about:
+---
 
-- 🧠 Code quality
-- 🐛 Potential issues
-- 🔍 Code analysis
-- 🧹 Linting errors
-- 📊 Code complexity
-- 💬 AI-powered code assistance
-- 📝 Detailed analysis reports
+## ✨ Features
 
-The platform combines automated developer tools with AI assistance to create a centralized coding workspace.
+### 🤖 AI-Powered Code Analysis
 
-✨ Features
+Upload your source code and receive an AI-generated code review containing:
 
-🔐 Authentication
+* 📊 Code Quality Score
+* 🐛 Bug Detection
+* ⚠️ Warning Detection
+* 🔐 Security Assessment
+* 🧠 Complexity Analysis
+* 💡 Improvement Suggestions
+* 📝 AI-Generated Summary
 
-- User registration
-- Secure login
-- JWT-based authentication
-- Forgot password functionality
-- OTP-based password reset
-- Change password from Settings
-- Secure password hashing
+The AI analysis is powered by the **Groq LLM API** using the `llama-3.3-70b-versatile` model.
 
-📂 Code Upload
+---
 
-Upload source code files directly to the workspace.
+### 🧠 Intelligent Agent Architecture
 
-The system automatically detects the programming language and prepares the uploaded code for analysis.
+The application follows a structured **planner-executor agent workflow** rather than simply sending code directly to an LLM.
 
-🔎 Code Analysis
+```text
+User Uploads Code
+       │
+       ▼
+Language Detection
+       │
+       ▼
+     Planner
+       │
+       ▼
+   Tool Selection
+       │
+       ├───────────────┬───────────────┐
+       ▼               ▼               ▼
+ Code Analyzer      Linter       Complexity Analyzer
+       │               │               │
+       └───────────────┴───────────────┘
+                       │
+                       ▼
+                  AI Analysis
+                       │
+                       ▼
+                Report Generation
+                       │
+                       ▼
+              Code Review Dashboard
+```
 
-The AI Coding Agent analyzes uploaded source code using multiple tools:
+### Agent Workflow
 
-- Code structure analysis
-- Code quality checks
-- Complexity analysis
-- Language detection
-- Linting
+1. **Language Detection**
 
-🧹 Code Linter
+   Identifies the programming language of the uploaded source file.
 
-Automatically identifies common coding issues and potential improvements.
+2. **Planning**
 
-📊 Complexity Analysis
+   The agent determines which analysis steps and tools are required.
 
-Analyzes code complexity to help developers understand maintainability and potential optimization areas.
+3. **Tool Selection**
 
-🤖 AI Coding Assistant
+   Depending on the uploaded code and language, the agent can select appropriate analysis tools.
 
-Interact with the AI assistant to:
+4. **Execution**
 
-- Understand your code
-- Identify problems
-- Get improvement suggestions
-- Ask coding-related questions
-- Receive explanations of complex code
+   The selected tools analyze the source code and return structured results.
 
-📑 Analysis Reports
+5. **AI Analysis**
 
-Generate structured reports based on automated code analysis and AI insights.
+   The collected information is processed by the LLM to identify bugs, warnings, security concerns, complexity, and improvement opportunities.
 
-⚙️ Settings
+6. **Report Generation**
 
-The Settings section allows users to manage their workspace and account preferences.
+   The results are converted into a structured code review report.
 
-Available options include:
+7. **Dashboard**
 
-- AI Assistant settings
-- Automatic Code Analysis
-- Profile information
-- Change Password
-- Dark Mode
+   The final analysis is displayed through an interactive developer dashboard.
 
-🛠️ Tech Stack
+---
 
-Frontend
+## 🛠️ Available Analysis Tools
 
-- React
-- Vite
-- JavaScript
-- Axios
-- CSS
+### 🔍 Code Analyzer
 
-Backend
+Uses an LLM to analyze source code and generate structured feedback.
 
-- Python
-- FastAPI
-- Uvicorn
-- SQLAlchemy
-- Pydantic
-- JWT Authentication
-- Passlib
-- Bcrypt
+The AI returns:
 
-AI & Code Analysis
+* Summary
+* Bugs
+* Warnings
+* Quality Score
+* Complexity
+* Security Assessment
+* Suggestions
 
-- AI-powered code assistance
-- Python-based analysis tools
-- Code Linter
-- Complexity Analyzer
-- Language Detection
+---
 
-🏗️ Project Structure
+### 🧹 Code Linter
 
+The application integrates language-specific linting tools.
+
+| Language   | Tool       |
+| ---------- | ---------- |
+| Python     | Flake8     |
+| JavaScript | ESLint     |
+| TypeScript | ESLint     |
+| Java       | Checkstyle |
+| C++        | Clang-Tidy |
+
+---
+
+### 📈 Complexity Analyzer
+
+For Python code, the application uses **Radon** to analyze cyclomatic complexity.
+
+The tool helps identify code that may be difficult to maintain or understand.
+
+---
+
+### 🌐 Language Detection
+
+Automatically detects supported programming languages based on the uploaded file.
+
+Currently supported file extensions include:
+
+```text
+.py
+.js
+.jsx
+.ts
+.tsx
+.cpp
+.c
+.java
+```
+
+---
+
+## 🔐 Authentication
+
+The application includes a complete authentication system.
+
+### Features
+
+* User Registration
+* User Login
+* JWT Authentication
+* Password Hashing with bcrypt
+* Protected User Sessions
+* Current User Endpoint
+* Logout
+* Forgot Password
+* OTP-Based Password Reset
+* Password Change
+
+Passwords are never stored as plain text.
+
+Passwords are securely hashed using **bcrypt** before being stored in the database.
+
+---
+
+## 🔑 Password Reset Flow
+
+The password reset system follows this flow:
+
+```text
+User enters registered email
+          │
+          ▼
+Backend verifies account
+          │
+          ▼
+OTP generated
+          │
+          ▼
+OTP stored temporarily
+          │
+          ▼
+User enters OTP
+          │
+          ▼
+OTP validation
+          │
+          ▼
+New password submitted
+          │
+          ▼
+Password updated
+```
+
+The OTP is time-limited and expires after the configured period.
+
+> For production deployment, the OTP flow should be connected to a real email delivery service rather than relying on backend terminal output.
+
+---
+
+## 💻 Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Axios
+* React Markdown
+* React Syntax Highlighter
+* CSS
+* Lucide Icons
+
+### Backend
+
+* Python
+* FastAPI
+* Uvicorn
+* SQLAlchemy
+* Pydantic
+* JWT
+* Passlib
+* bcrypt
+
+### AI
+
+* Groq API
+* Llama 3.3 70B Versatile
+
+### Code Analysis
+
+* Flake8
+* ESLint
+* Radon
+* Clang-Tidy
+* Checkstyle
+
+### Database
+
+* SQLAlchemy ORM
+* SQLite for local development
+* Configurable database backend
+
+### Deployment
+
+* Vercel
+* Render
+
+### Testing & CI
+
+* Pytest
+* GitHub Actions
+
+---
+
+## 📁 Project Structure
+
+```text
 AI-Coding-Agent/
 │
 ├── backend/
+│   │
 │   ├── agent/
 │   │   ├── agent.py
 │   │   ├── executor.py
@@ -132,6 +288,19 @@ AI-Coding-Agent/
 │   │   ├── report_generator.py
 │   │   ├── state.py
 │   │   └── tool_planner.py
+│   │
+│   ├── auth/
+│   │   ├── auth.py
+│   │   └── jwt.py
+│   │
+│   ├── database/
+│   │   └── database.py
+│   │
+│   ├── models/
+│   │   └── user.py
+│   │
+│   ├── storage/
+│   │   └── session.py
 │   │
 │   ├── tools/
 │   │   ├── code_analyzer.py
@@ -142,143 +311,478 @@ AI-Coding-Agent/
 │   │   ├── linter.py
 │   │   └── registry.py
 │   │
-│   ├── storage/
-│   │   └── session.py
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   ├── test_code_analyzer.py
+│   │   ├── test_complexity.py
+│   │   ├── test_language_detector.py
+│   │   └── test_linter.py
 │   │
+│   ├── agent/
 │   ├── main.py
-│   └── requirements.txt
+│   ├── llm.py
+│   ├── requirements.txt
+│   └── .env
 │
 ├── frontend/
 │   ├── src/
+│   │   ├── components/
 │   │   ├── App.jsx
 │   │   ├── App.css
-│   │   └── ...
+│   │   └── main.jsx
 │   │
 │   ├── package.json
 │   └── vite.config.js
 │
+├── .github/
+│   └── workflows/
+│       └── tests.yml
+│
 └── README.md
-
-⚙️ Local Setup
-
-1. Clone the Repository
-
-git clone https://github.com/shreyanshdubeyy/AI-Coding-Agent.git
-cd AI-Coding-Agent
-
-2. Backend Setup
-
-cd backend
-
-Create a virtual environment:
-
-python -m venv venv
-
-Activate it on Windows:
-
-venv\Scripts\activate
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Start the backend:
-
-uvicorn main:app --reload
-
-The backend will run at:
-
-http://127.0.0.1:8000
-
-API documentation:
-
-http://127.0.0.1:8000/docs
-
-3. Frontend Setup
-
-Open a new terminal:
-
-cd frontend
-
-Install dependencies:
-
-npm install
-
-Start the development server:
-
-npm run dev
-
-The frontend will run at the local Vite URL shown in your terminal.
-
-🔑 Environment Variables
-
-Create a ".env" file inside the backend directory and add the required API credentials.
-
-Example:
-
-GROQ_API_KEY=your_api_key_here
-SECRET_KEY=your_secret_key_here
-
-Never commit your ".env" file or API keys to GitHub.
-
-🌐 Deployment
-
-Frontend
-
-The frontend can be deployed using platforms such as Vercel or Render.
-
-Backend
-
-The backend is deployed using Render.
-
-Production Backend:
-
-https://ai-coding-agent-backend-9uaq.onrender.com
-
-API Documentation:
-
-https://ai-coding-agent-backend-9uaq.onrender.com/docs
-
-🔐 Security
-
-The project includes:
-
-- JWT-based authentication
-- Password hashing
-- OTP-based password reset
-- Protected user authentication flow
-- Environment variable based API key management
-
-«For production deployments, always use secure environment variables and HTTPS.»
-
-🎯 Future Improvements
-
-Planned improvements include:
-
-- GitHub repository integration
-- Multi-language code execution
-- Advanced AI debugging
-- Automated code fixing
-- Pull Request analysis
-- Real-time code collaboration
-- Code quality scoring
-- Improved dark mode
-- Advanced project management
-- AI-generated documentation
-- Automated test generation
-
-👨‍💻 Author
-
-Shreyansh Dubey
-
-B.Tech — Artificial Intelligence & Robotics
-
-Interested in AI, Robotics, Software Development, and Intelligent Developer Tools.
-
-⭐ Support
-
-If you find this project useful, consider giving the repository a ⭐ on GitHub.
+```
 
 ---
 
-Built with ❤️ using React, FastAPI, Python, and AI.
+## ⚙️ Getting Started
+
+### Prerequisites
+
+Make sure you have installed:
+
+* Python 3.10+
+* Node.js 18+
+* npm
+* Git
+
+For Python code analysis:
+
+* Flake8
+* Radon
+
+Depending on the language being analyzed, you may also need:
+
+* ESLint
+* Checkstyle
+* Clang-Tidy
+
+---
+
+# 🔧 Backend Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/shreyanshdubeyy/AI-Coding-Agent.git
+```
+
+```bash
+cd AI-Coding-Agent
+```
+
+---
+
+### 2. Navigate to Backend
+
+```bash
+cd backend
+```
+
+---
+
+### 3. Create Virtual Environment
+
+Windows:
+
+```bash
+python -m venv venv
+```
+
+Activate:
+
+```bash
+venv\Scripts\activate
+```
+
+Linux/macOS:
+
+```bash
+python3 -m venv venv
+```
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### 4. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Install code analysis tools if they are not already included:
+
+```bash
+pip install pytest radon flake8
+```
+
+---
+
+### 5. Configure Environment Variables
+
+Create a `.env` file inside the `backend` folder:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+SECRET_KEY=your_secret_key
+```
+
+Never commit `.env` files or API keys to GitHub.
+
+Make sure `.env` is included in `.gitignore`:
+
+```gitignore
+.env
+venv/
+__pycache__/
+.pytest_cache/
+```
+
+---
+
+### 6. Run Backend
+
+```bash
+uvicorn main:app --reload
+```
+
+The backend will run at:
+
+```text
+http://127.0.0.1:8000
+```
+
+API documentation is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# 🎨 Frontend Setup
+
+Open a new terminal.
+
+Navigate to the frontend:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+The frontend will be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 🧪 Testing
+
+The project includes automated tests using **Pytest**.
+
+Current tests cover:
+
+* Code Analyzer
+* Complexity Analyzer
+* Language Detection
+* Linter
+
+Run all tests:
+
+```bash
+cd backend
+python -m pytest -v
+```
+
+Expected result:
+
+```text
+6 passed
+```
+
+The AI code analyzer test uses a mocked LLM response so that tests do not require a real Groq API key.
+
+This keeps the test suite:
+
+* Fast
+* Deterministic
+* Secure
+* Independent of external AI APIs
+
+---
+
+## 🔄 Continuous Integration
+
+The project uses **GitHub Actions** to automatically run the backend test suite.
+
+The workflow is located at:
+
+```text
+.github/workflows/tests.yml
+```
+
+The CI pipeline:
+
+1. Checks out the repository
+2. Sets up Python
+3. Installs dependencies
+4. Installs code analysis tools
+5. Runs the complete Pytest suite
+
+The tests run automatically on:
+
+* Pushes to `main`
+* Pull requests targeting `main`
+
+Example workflow:
+
+```text
+Git Push / Pull Request
+        │
+        ▼
+GitHub Actions
+        │
+        ▼
+Setup Python
+        │
+        ▼
+Install Dependencies
+        │
+        ▼
+Run Pytest
+        │
+        ▼
+6 Tests Passed ✅
+```
+
+---
+
+## 📸 Screenshots
+
+> Add screenshots of your deployed application here.
+
+### 🔐 Authentication
+
+Add a screenshot showing:
+
+* Login
+* Register
+* Forgot Password
+
+```md
+![Authentication](./screenshots/login.png)
+```
+
+---
+
+### 📊 AI Code Review Dashboard
+
+```md
+![Code Review Dashboard](./screenshots/dashboard.png)
+```
+
+---
+
+### 🤖 AI Code Analysis
+
+```md
+![AI Code Analysis](./screenshots/analysis.png)
+```
+
+---
+
+### 💬 Chat With Code
+
+```md
+![Chat With Code](./screenshots/chat.png)
+```
+
+---
+
+
+## 🔒 Security Considerations
+
+The application implements several security measures:
+
+* Passwords are hashed using bcrypt.
+* Authentication uses JWT tokens.
+* API keys are stored in environment variables.
+* `.env` files are excluded from version control.
+* Protected endpoints require authentication.
+* Password reset uses time-limited OTPs.
+
+### Production Recommendations
+
+For production deployments, additional security measures should be considered:
+
+* HTTPS
+* Rate limiting
+* Secure HTTP-only cookies where appropriate
+* Short-lived access tokens
+* Refresh token rotation
+* Email-based OTP delivery
+* OTP attempt limits
+* Account lockout protection
+* Input validation
+* Database backups
+* Centralized logging
+* Monitoring and error tracking
+
+---
+
+## 🌍 Deployment
+
+### Frontend
+
+The frontend can be deployed using:
+
+* Vercel
+* Netlify
+
+### Backend
+
+The FastAPI backend can be deployed using:
+
+* Render
+* Railway
+* Fly.io
+
+Make sure to configure the required environment variables in the deployment platform.
+
+For example:
+
+```text
+GROQ_API_KEY
+SECRET_KEY
+```
+
+Do not upload your `.env` file to the repository.
+
+---
+
+## 🔮 Future Improvements
+
+Planned improvements include:
+
+* [ ] Real email-based OTP delivery
+* [ ] GitHub repository integration
+* [ ] Pull Request code review
+* [ ] Support for additional programming languages
+* [ ] More advanced static analysis
+* [ ] Persistent code analysis history
+* [ ] User-specific project workspaces
+* [ ] Refresh token authentication
+* [ ] Rate limiting
+* [ ] Docker support
+* [ ] Production-grade database configuration
+* [ ] Advanced agent memory
+* [ ] Improved multi-tool planning
+* [ ] CI/CD deployment pipeline
+
+---
+
+## 📈 Roadmap
+
+### Phase 1 — Core Platform
+
+* [x] User Authentication
+* [x] JWT Authorization
+* [x] Password Hashing
+* [x] Password Reset
+* [x] Code Upload
+* [x] Language Detection
+* [x] AI Code Analysis
+
+### Phase 2 — Developer Tools
+
+* [x] Linter Integration
+* [x] Complexity Analysis
+* [x] AI Code Review
+* [x] Code Chat
+
+### Phase 3 — Engineering Quality
+
+* [x] Automated Tests
+* [x] GitHub Actions CI
+* [x] Modular Agent Architecture
+
+### Phase 4 — Future
+
+* [ ] GitHub Repository Integration
+* [ ] Pull Request Reviews
+* [ ] Email OTP
+* [ ] Advanced Security Analysis
+* [ ] Persistent Analysis History
+
+---
+
+## 🎯 Why This Project?
+
+Most AI coding assistants focus primarily on generating code.
+
+This project focuses on combining:
+
+```text
+AI Reasoning
+     +
+Static Code Analysis
+     +
+Developer Tools
+     +
+Agent Architecture
+     +
+Authentication
+     +
+Automated Testing
+```
+
+The goal is to create an intelligent developer workspace that combines traditional software engineering tools with modern LLM-powered code analysis.
+
+---
+
+## 👨‍💻 Author
+
+**Shreyansh Dubey**
+
+B.Tech — Artificial Intelligence and Robotics
+
+GitHub: [Add your GitHub profile]
+
+LinkedIn: [Add your LinkedIn profile]
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+See the `LICENSE` file for more information.
+
+---
+
+⭐ If you found this project interesting, consider giving it a star on GitHub!
