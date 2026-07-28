@@ -584,43 +584,27 @@ Run Pytest
 
 ## 📸 Screenshots
 
-> Add screenshots of your deployed application here.
-
 ### 🔐 Authentication
 
-Add a screenshot showing:
-
-* Login
-* Register
-* Forgot Password
-
-```md
-![Authentication](./screenshots/login.png)
-```
+<img width="1920" height="1080" alt="login png" src="https://github.com/user-attachments/assets/6eb2a9be-b986-4113-9936-4cbc3a0af3f6" />
 
 ---
 
 ### 📊 AI Code Review Dashboard
 
-```md
-![Code Review Dashboard](./screenshots/dashboard.png)
-```
+<img width="1920" height="1080" alt="dashboard png" src="https://github.com/user-attachments/assets/d5ec0f49-edb7-4236-b660-d3ad42c16783" />
 
 ---
 
 ### 🤖 AI Code Analysis
 
-```md
-![AI Code Analysis](./screenshots/analysis.png)
-```
+<img width="1920" height="1080" alt="analysis png" src="https://github.com/user-attachments/assets/9fd73255-1be5-4ab6-81f7-e1564175cd3c" />
 
 ---
 
 ### 💬 Chat With Code
 
-```md
-![Chat With Code](./screenshots/chat.png)
-```
+<img width="1920" height="1080" alt="chat png" src="https://github.com/user-attachments/assets/5cda1787-f623-456c-956d-f01c28e0fadd" />
 
 ---
 
@@ -771,9 +755,9 @@ The goal is to create an intelligent developer workspace that combines tradition
 
 B.Tech — Artificial Intelligence and Robotics
 
-GitHub: [Add your GitHub profile]
+GitHub: https://github.com/shreyanshdubey
 
-LinkedIn: [Add your LinkedIn profile]
+LinkedIn: https://linkedin.com/in/shreyansh-dubey-a553a3370
 
 ---
 
