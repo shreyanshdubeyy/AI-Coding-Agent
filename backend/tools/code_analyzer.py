@@ -1,8 +1,11 @@
-from llm import ask_llm
 import json
 
 
 def analyze_code(code: str):
+
+    # Import only when AI analysis is actually executed.
+    # This allows unit tests to run without requiring GROQ_API_KEY.
+    from llm import ask_llm
 
     prompt = f"""
 You are an expert software engineer and code reviewer.
@@ -80,7 +83,7 @@ Code to analyze:
 
         return analysis
 
-    except Exception as e:
+    except Exception:
 
         return {
             "summary": response,
